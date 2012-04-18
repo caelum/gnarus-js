@@ -1,0 +1,44 @@
+<strong>Declare uma variavel chamada idade e coloque o valor 15.</strong><br/>
+
+<form id="exercise" method="POST" action="<%= exercise_attempt_executions_url(@attempt.exercise, @attempt)%>">
+<textarea style="width: 800px; height: 100px" id="solution"></textarea>
+<input type="button" id="try" value="Verificar">
+<input type="button" id="skip" value="Ignorar e continuar">
+</form>
+<div id="errors"></div>
+<script>
+var errors = [];
+function checkThat(error, condition) {
+	if(!condition) {
+		errors.push(error);
+	}
+}
+	$("#try").click(function() {
+		errors = [];
+		var userCode = $("#solution").val();
+		var verifyCode = "<%= raw(@attempt.exercise.content) %>";
+		eval(userCode + verifyCode);
+		$('#errors').html(errors.join("<br/>"));
+		if(errors.length==0) {
+			form.process();
+		}
+	});
+	var form = gnarus.attemptForm(extractSolution, showToUser, '<%=@attempt.return_uri%>');
+	$('#skip').click(form.skip);
+	
+	function showToUser(r) {
+	}
+	function extractSolution() {
+		return {solution : $('#solution').val()};
+	}
+</script>
+
+
+
+
+
+
+
+
+
+
